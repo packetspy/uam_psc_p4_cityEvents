@@ -2,15 +2,21 @@ package Views;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 import Controllers.EventController;
+import Models.Event;
 
 public class EventMenuView {
     private Scanner scanner;
+    private EventController eventController;
 
     public EventMenuView(Scanner _scanner) {
+        EventController _eventController = new EventController();
+
         scanner = _scanner;
+        eventController = _eventController;
     }
 
     public void showNewEventEntry() {
@@ -20,14 +26,20 @@ public class EventMenuView {
         String name = scanner.nextLine().replace(",", "");
 
         System.out.println("Enter Start Date (dd/mm/yyyy):");
-        LocalDate startDate = LocalDate.parse(scanner.nextLine().replace(",", ""), formatter);
-
-        System.out.println("Enter End Date (dd/mm/yyyy):");
-        LocalDate endDate = LocalDate.parse(scanner.nextLine().replace(",", ""), formatter);
+        LocalDate date = LocalDate.parse(scanner.nextLine().replace(",", ""), formatter);
 
         System.out.println("Enter Type (Show/Parade):");
         String type = scanner.nextLine().replace(",", "");
 
-        EventController.createEvent(name, startDate, endDate, type);
+        EventController.createEvent(name, date, type);
+    }
+
+    public void listEvents() {
+        List<Event> events = eventController.getAllEvents();
+
+        for (Event event : events) {
+            System.out.println("Event: \t" + event.toShowList());
+        }
+        System.out.println("\n");
     }
 }

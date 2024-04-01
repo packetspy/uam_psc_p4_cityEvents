@@ -54,6 +54,8 @@ public class MainMenuView {
                                 eventMenuView.showNewEventEntry();
                                 break;
                             case 4:
+                                Screen.clear();
+                                eventMenuView.listEvents();
                             case 5:
                                 System.out.println("Exiting...");
                                 System.exit(0);
